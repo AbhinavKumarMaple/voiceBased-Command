@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import MicRecorder from "mic-recorder-to-mp3";
+import "./App.css";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -126,28 +127,38 @@ function App() {
   return (
     <div className="App">
       <h1>Live Audio Recording App</h1>
-      <div>
-        <button onClick={handleAudioStart} disabled={isRecording}>
+      <div className="controls">
+        <button
+          onClick={handleAudioStart}
+          disabled={isRecording}
+          className="button"
+        >
           Start Recording
         </button>
-        <button onClick={handleAudioStop} disabled={!isRecording}>
+        <button
+          onClick={handleAudioStop}
+          disabled={!isRecording}
+          className="button"
+        >
           Stop Recording
         </button>
       </div>
-      <div>
+      <div className="audio-container">
         {audioURL && (
-          <div>
+          <div className="audio-player">
             <h2>Recorded Audio:</h2>
             <audio controls src={audioURL}></audio>
           </div>
         )}
       </div>
-      <div>
-        <button onClick={handleAPICall}>Perform Action</button>
+      <div className="action">
+        <button onClick={handleAPICall} className="button action-button">
+          Perform Action
+        </button>
       </div>
-      {isLoading && <div>Loading....</div>}
+      {isLoading && <div className="loading">Loading....</div>}
       {Result && (
-        <div>
+        <div className="result">
           <h2>Question:</h2>
           <pre>
             {JSON.stringify(response.pipelineResponse[0].output[0].source)}

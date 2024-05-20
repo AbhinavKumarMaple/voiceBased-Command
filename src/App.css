@@ -1,47 +1,79 @@
 .App {
+  font-family: 'Arial', sans-serif;
   text-align: center;
-  margin: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-div {
-  margin: 10px 0;
+h1 {
+  color: #333;
+  margin-bottom: 20px;
 }
 
-label {
-  margin-right: 10px;
+.controls,
+.action {
+  margin-bottom: 20px;
 }
 
-input {
-  margin: 5px;
-  padding: 5px;
-}
-
-button {
+.button {
   padding: 10px 20px;
   margin: 5px;
-  background-color: #007BFF;
-  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
 }
 
-button:disabled {
-  background-color: #cccccc;
+.start {
+  background-color: #4caf50;
+  color: white;
 }
 
-button:hover:not(:disabled) {
-  background-color: #0056b3;
+.stop {
+  background-color: #f44336;
+  color: white;
+}
+
+.action-button {
+  background-color: #2196f3;
+  color: white;
+}
+
+.audio-container {
+  margin-bottom: 20px;
+}
+
+.audio-player h2 {
+  margin-bottom: 10px;
+  color: #666;
 }
 
 audio {
-  margin: 20px 0;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.loading {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.result {
+  text-align: left;
+}
+
+.result h2 {
+  color: #444;
 }
 
 pre {
-  text-align: left;
-  background-color: #f4f4f4;
-  padding: 20px;
+  background-color: #eee;
+  padding: 10px;
   border-radius: 5px;
   overflow-x: auto;
 }
