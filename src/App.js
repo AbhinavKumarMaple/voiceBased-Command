@@ -108,11 +108,11 @@ function App() {
           query: res.data.pipelineResponse[0].output[0].source,
         };
         const secondApiResponse = await axios.post(
-          "https://gemini.up.railway.app/api/gemini/",
+          "/api/gemini",
           secondApiPayload,
           {
             headers: {
-              "Access-Control-Allow-Origin": "*",
+              "Content-Type": "application/json",
             },
           }
         );
