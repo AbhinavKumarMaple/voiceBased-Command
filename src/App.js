@@ -109,7 +109,12 @@ function App() {
         };
         const secondApiResponse = await axios.post(
           "https://gemini.up.railway.app/api/gemini/",
-          secondApiPayload
+          secondApiPayload,
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
         );
 
         setResult((prev) => secondApiResponse.data);
