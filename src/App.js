@@ -108,7 +108,7 @@ function App() {
           query: res.data.pipelineResponse[0].output[0].source,
         };
         const secondApiResponse = await axios.post(
-          "/api/gemini/",
+          "https://gemini.up.railway.app/api/gemini/",
           secondApiPayload
         );
 
