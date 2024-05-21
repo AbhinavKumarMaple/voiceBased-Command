@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/api/gemini/*",
+      "source": "/api/gemini/",
       "destination": "https://gemini.up.railway.app/gemini/"
     },
     {
