@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://gemini.up.railway.app/:path*"
+    },
+    {
+      "source": "/api/:path*/",
+      "destination": "https://gemini.up.railway.app/:path*/"
+    }
+  ]
+}
