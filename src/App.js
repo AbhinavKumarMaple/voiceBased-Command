@@ -51,6 +51,7 @@ function App() {
   };
 
   const handleAPICall = async () => {
+    // setResponse(null)
     if (!audioURL) {
       alert("No audio recorded");
       return;
@@ -105,8 +106,9 @@ function App() {
         res.data.pipelineResponse.length > 0
       ) {
         const secondApiPayload = {
-          query: res.data.pipelineResponse[0].output[0].source,
+          query: (res.data.pipelineResponse[0].output[0].source).toLowerCase(),
         };
+        console.log((res.data.pipelineResponse[0].output[0].source).toLowerCase())
         const secondApiResponse = await axios.post(
           "/api/gemini",
           secondApiPayload,
