@@ -19,9 +19,11 @@ const Products = () => {
       const newData = response.data.message;
 
       const updated = {};
-      newData.forEach((newProduct) => {
-        const oldProduct = previousDataRef.current.find((product) => product._id === newProduct._id);
-        if (oldProduct) {
+      if(newData){
+
+        newData?.forEach((newProduct) => {
+          const oldProduct = previousDataRef.current.find((product) => product._id === newProduct._id);
+          if (oldProduct) {
           const updatedProductFields = {};
           if (oldProduct.name !== newProduct.name) updatedProductFields.name = true;
           if (oldProduct.price !== newProduct.price) updatedProductFields.price = true;
@@ -31,13 +33,14 @@ const Products = () => {
           if (Object.keys(updatedProductFields).length > 0) {
             updated[newProduct._id] = { ...updatedProductFields, timestamp: Date.now() };
           }
-        //   console.log("newProduct",newProduct)
+          //   console.log("newProduct",newProduct)
           // Check if product value falls below the threshold
           if (newProduct.inventory <= minThreshold) {
             setTriggerTTS(newProduct);
           }
         }
       });
+        }
 
       setData(newData);
       setUpdatedFields((prev) => ({ ...prev, ...updated }));
@@ -88,7 +91,7 @@ const Products = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((product) => (
+          {data && data?.map((product) => (
             <tr key={product._id}>
               <td style={getHighlightStyle(product._id, 'name')}>{product.name}</td>
               <td style={getHighlightStyle(product._id, 'price')}>{product.price}</td>
