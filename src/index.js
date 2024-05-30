@@ -1,31 +1,35 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Products from './Products';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Products from "./Products";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
+//react router dom
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
   },
- { path:"/products",
-  element:<Products/>}
+  { path: "/products", element: <Products /> },
 ]);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <div style={{height:'100vh', alignItems:'center', width:'100%',alignContent:'space-between', justifyItems:'center'}}>
+  <div
+    style={{
+      height: "100vh",
+      alignItems: "center",
+      width: "100%",
+      alignContent: "space-between",
+      justifyItems: "center",
+    }}
+  >
     <div>
-
-    <Header/>
+      <Header />
     </div>
 
     <RouterProvider router={router} />
@@ -34,4 +38,3 @@ root.render(
 );
 
 reportWebVitals();
-
