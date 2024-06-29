@@ -1,24 +1,35 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MicRecorder from "mic-recorder-to-mp3";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
 import "./App.css";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 function App() {
   const [sourceLanguage, setSourceLanguage] = useState("hi");
-  const [asrServiceId, setAsrServiceId] = useState(
-    "ai4bharat/conformer-hi-gpu--t4"
-  );
+  const [asrServiceId, setAsrServiceId] = useState("ai4bharat/conformer-hi-gpu--t4");
   const [audioURL, setAudioURL] = useState("");
   const [base64Audio, setBase64Audio] = useState("");
   const [response, setResponse] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
-  //ai result in state
-  const [Result, setResult] = useState("");
-
-  //loading
+  const [result, setResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (result?.message) {
+      speakText(result.message, sourceLanguage);
+    }
+  }, [result, sourceLanguage]);
+
+  const handleMicClick = () => {
+    if (isRecording) {
+      handleAudioStop();
+    } else {
+      handleAudioStart();
+    }
+  };
 
   const handleAudioStart = () => {
     Mp3Recorder.start()
@@ -34,29 +45,27 @@ function App() {
       .then(([buffer, blob]) => {
         const audioURL = URL.createObjectURL(blob);
         setAudioURL(audioURL);
-        convertBlobToBase64(blob);
+        convertBlobToBase64(blob).then((base64Audio) => {
+          handleAPICall(base64Audio); // Call API with current audio data
+        });
         setIsRecording(false);
       })
       .catch((e) => console.error(e));
   };
 
   const convertBlobToBase64 = (blob) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64Audio = reader.result.split(",")[1];
-      console.log("Base64 Audio:", base64Audio); // Debug: Log the Base64 audio string
-      setBase64Audio(base64Audio);
-    };
-    reader.readAsDataURL(blob);
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64Audio = reader.result.split(",")[1];
+        setBase64Audio(base64Audio);
+        resolve(base64Audio);
+      };
+      reader.readAsDataURL(blob);
+    });
   };
 
-  const handleAPICall = async () => {
-    // setResponse(null)
-    if (!audioURL) {
-      alert("No audio recorded");
-      return;
-    }
-
+  const handleAPICall = async (base64Audio) => {
     if (!base64Audio) {
       alert("Audio not converted to Base64");
       return;
@@ -83,14 +92,12 @@ function App() {
         },
       };
 
-      console.log("Payload:", JSON.stringify(payload, null, 2)); // Debug: Log the payload
       const res = await axios.post(
         "https://dhruva-api.bhashini.gov.in/services/inference/pipeline",
         payload,
         {
           headers: {
-            Authorization:
-              "HAAdDttl-hYhfAlV2sjzG9z7HpLjmgyDJcZVvJwJOaw085g_dMqM1eSVwE8hfywB",
+            Authorization: "HAAdDttl-hYhfAlV2sjzG9z7HpLjmgyDJcZVvJwJOaw085g_dMqM1eSVwE8hfywB",
             Accept: " */*",
             "User-Agent": "Thunder Client (https://www.thunderclient.com)",
             "Content-Type": "application/json",
@@ -99,7 +106,6 @@ function App() {
       );
       setResponse(res.data);
 
-      // Call the second API with the response from the first API
       if (
         res.data &&
         res.data.pipelineResponse &&
@@ -108,9 +114,7 @@ function App() {
         const secondApiPayload = {
           query: res.data.pipelineResponse[0].output[0].source.toLowerCase(),
         };
-        console.log(
-          res.data.pipelineResponse[0].output[0].source.toLowerCase()
-        );
+
         const secondApiResponse = await axios.post(
           "/api/gemini",
           secondApiPayload,
@@ -121,10 +125,8 @@ function App() {
           }
         );
 
-        setResult((prev) => secondApiResponse.data);
+        setResult(secondApiResponse.data);
         setIsLoading(false);
-        console.log("Second API Response:", secondApiResponse.data);
-        // Handle the response from the second API as needed
       }
     } catch (error) {
       setIsLoading(false);
@@ -133,24 +135,43 @@ function App() {
     }
   };
 
+  const speakText = (text, language) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = language;
+    speechSynthesis.speak(utterance);
+  };
+
   return (
     <div className="App">
-      <h1>Live Audio Recording App</h1>
-      <div className="controls">
-        <button
-          onClick={handleAudioStart}
-          disabled={isRecording}
-          className="button"
-        >
-          Start Recording
-        </button>
-        <button
-          onClick={handleAudioStop}
-          disabled={!isRecording}
-          className="button"
-        >
-          Stop Recording
-        </button>
+      <div className="content">
+        {response && (
+          <div className="result">
+            <h2>Question:</h2>
+            <pre>{JSON.stringify(response.pipelineResponse[0].output[0].source)}</pre>
+            <h2>Answer:</h2>
+            <pre>{JSON.stringify(result?.message)}</pre>
+          </div>
+        )}
+      </div>
+      <div className="mic-container">
+        {!isLoading && (
+          <FontAwesomeIcon
+            icon={faMicrophone}
+            onClick={handleMicClick}
+            className={`mic-button ${isRecording ? "recording" : ""}`}
+          />
+        )}
+        {isLoading && (
+          <div className="mic-loading">
+            
+            <div className="assistant-bubble">
+              <div className="dot1" />
+              <div className="dot2" />
+              <div className="dot3" />
+    
+            </div>
+          </div>
+        )}
       </div>
       <div className="audio-container">
         {audioURL && (
@@ -160,22 +181,6 @@ function App() {
           </div>
         )}
       </div>
-      <div className="action">
-        <button onClick={handleAPICall} className="button action-button">
-          Perform Action
-        </button>
-      </div>
-      {isLoading && <div className="loading">Loading....</div>}
-      {Result && (
-        <div className="result">
-          <h2>Question:</h2>
-          <pre>
-            {JSON.stringify(response.pipelineResponse[0].output[0].source)}
-          </pre>
-          <h2>Answer:</h2>
-          <pre>{JSON.stringify(Result?.message)}</pre>
-        </div>
-      )}
     </div>
   );
 }

@@ -1,79 +1,157 @@
+/* App.css */
+
+/* Base styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f2f2f2; /* Light gray background */
+  color: #212121; /* Dark blue text color */
+}
+
 .App {
-  font-family: "Arial", sans-serif;
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100vh;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #343c44; /* Dark blue background */
+  color: #fff; /* White text color */
 }
 
-h1 {
-  color: #333;
+.content {
+  text-align: center;
   margin-bottom: 20px;
 }
 
-.controls,
-.action {
-  margin-bottom: 20px;
-}
-
-.button {
-  padding: 10px 20px;
-  margin: 5px;
-  border: none;
-  border-radius: 5px;
+.mic-container {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   cursor: pointer;
-  font-size: 16px;
+  display: flex;
+  align-items: center;
+  z-index: 1000; /* Ensure the microphone button is above other content */
 }
 
-.start {
-  background-color: #4caf50;
-  color: white;
+.mic-button {
+  font-size: 36px;
+  color: #faf8f8;
+  background-color: #000103;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  transition: all 0.3s ease;
 }
 
-.stop {
-  background-color: #f44336;
-  color: white;
+.mic-button:hover {
+  background-color: #e99d2c;
+  color: #080000;
+  font-size: 46px;
 }
 
-.action-button {
-  background-color: #2196f3;
-  color: white;
+.mic-button.recording {
+  background-color: #ff1b1b;
+  color: #ffffff;
 }
 
-.audio-container {
-  margin-bottom: 20px;
+.mic-loading {
+  display: flex;
+  align-items: center;
 }
 
-.audio-player h2 {
-  margin-bottom: 10px;
-  color: #666;
+.assistant-bubble {
+  width: 40px; /* Increased bubble size */
+  height: 40px; /* Increased bubble size */
+  position: relative;
 }
 
-audio {
-  width: 100%;
-  border-radius: 5px;
+.dot1, .dot2, .dot3 {
+  position: absolute;
+  width: 20px; /* Increased dot size */
+  height: 20px; /* Increased dot size */
+  background-color: #FFA500; /* Orange color */
+  border-radius: 50%;
+  animation: assistant-pulse 1s infinite;
+}
+
+.dot1 {
+  left: 0;
+  animation-delay: 0s;
+}
+
+.dot2 {
+  left: 20px; /* Adjusted position */
+  animation-delay: 0.2s;
+  background-color: white; /* White color */
+}
+
+.dot3 {
+  left: 40px; /* Adjusted position */
+  animation-delay: 0.4s;
+  background-color: green; /* Blue color */
+}
+
+@keyframes assistant-pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.5);
+    opacity: 0.7;
+  }
 }
 
 .loading {
+  text-align: center;
   font-size: 18px;
   color: #666;
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .result {
   text-align: left;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #45668a;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgb(235, 232, 232); /* Added box shadow */
 }
 
-.result h2 {
-  color: #444;
-}
-
-pre {
-  background-color: #eee;
+.result pre {
+  background-color: #000000; /* Dark blue background for response text */
+  color: #fff; /* White text color for response text */
   padding: 10px;
   border-radius: 5px;
   overflow-x: auto;
+}
+
+.result h2 {
+  color: #fdfcfc; /* Green header color */
+  margin-bottom: 10px;
+}
+
+.result pre {
+  background-color: #1d1818; /* Dark blue background for response text */
+  color: #fff; /* White text color for response text */
+  padding: 10px;
+  border-radius: 5px;
+  size:10px;
+  overflow-x: auto;
+}
+
+.audio-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.audio-player {
+  display: none;
 }
