@@ -110,9 +110,12 @@ const Products = () => {
   };
 
   const getHighlightStyle = (productId, field) => {
-    return updatedFields[productId] && updatedFields[productId][field]
-      ? { color: "red" }
-      : {};
+    if (field === "inventory") {
+      return updatedFields[productId] && updatedFields[productId][field]
+        ? { color: "red" }
+        : {};
+    }
+    return {};
   };
 
   return (
@@ -129,30 +132,29 @@ const Products = () => {
       <table>
         <thead>
           <tr>
-            <th style={{ color: "red" }}>Name</th>
-            <th style={{ color: "red" }}>Price</th>
-            <th style={{ color: "red" }}>Inventory</th>
-            <th style={{ color: "red" }}>Last Modified</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Inventory</th>
+            <th>Last Modified</th>
           </tr>
         </thead>
         <tbody>
           {data &&
             data?.map((product) => (
-              <tr
-                key={product._id}
-                style={
-                  product.inventory <= minThreshold
-                    ? { color: "red" }
-                    : {}
-                }
-              >
+              <tr key={product._id}>
                 <td style={getHighlightStyle(product._id, "name")}>
                   {product.name}
                 </td>
                 <td style={getHighlightStyle(product._id, "price")}>
                   {product.price}
                 </td>
-                <td style={getHighlightStyle(product._id, "inventory")}>
+                <td
+                  style={
+                    product.inventory <= minThreshold
+                      ? { color: "red" }
+                      : getHighlightStyle(product._id, "inventory")
+                  }
+                >
                   {product.inventory}
                 </td>
                 <td style={getHighlightStyle(product._id, "lastModified")}>
