@@ -1,29 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import "./Products.css"; // Import CSS file for styling
 
 const Products = () => {
-  console.log("products");
   const [data, setData] = useState([]);
   const [updatedFields, setUpdatedFields] = useState({});
   const [triggerTTS, setTriggerTTS] = useState(null);
   const previousDataRef = useRef([]);
   const acknowledgedProductsRef = useRef(new Set());
 
-  // Define minimum threshold for product value
   const minThreshold = 30;
 
   const getData = async () => {
     try {
       const apiUrl = process.env.REACT_APP_API_URL || "/api/gemini/allproducts";
-      console.log("API URL:", apiUrl);
-
       const response = await axios.get(apiUrl);
-      console.log("Fetched data:", response.data);
       const newData = response.data.message;
 
       const updated = {};
       if (newData) {
-        newData?.forEach((newProduct) => {
+        newData.forEach((newProduct) => {
           const oldProduct = previousDataRef.current.find(
             (product) => product._id === newProduct._id
           );
@@ -45,7 +41,6 @@ const Products = () => {
               };
             }
 
-            // Check if product value falls below the threshold and hasn't been acknowledged
             if (
               newProduct.inventory <= minThreshold &&
               !acknowledgedProductsRef.current.has(newProduct._id)
@@ -59,7 +54,6 @@ const Products = () => {
       setData(newData);
       setUpdatedFields((prev) => ({ ...prev, ...updated }));
 
-      // Remove highlight after 10 seconds
       setTimeout(() => {
         const now = Date.now();
         setUpdatedFields((prev) => {
@@ -73,7 +67,6 @@ const Products = () => {
         });
       }, 10000);
 
-      // Update previous data reference
       previousDataRef.current = newData;
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -81,10 +74,8 @@ const Products = () => {
   };
 
   useEffect(() => {
-    getData(); // Initial fetch
-    const interval = setInterval(getData, 10000); // Fetch data every 10 seconds
-
-    // Cleanup interval on component unmount
+    getData();
+    const interval = setInterval(getData, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -98,7 +89,7 @@ const Products = () => {
 
   const speakText = (text) => {
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "hi-IN"; // Set the language to Hindi
+    utterance.lang = "hi-IN";
     utterance.onerror = (e) => console.error("Speech synthesis error:", e);
     speechSynthesis.speak(utterance);
   };
@@ -118,37 +109,36 @@ const Products = () => {
     return {};
   };
 
+  const getCardStyle = (product) => {
+    return product.inventory <= minThreshold
+      ? { backgroundColor: "#ffcccc" }
+      : {};
+  };
+
   return (
-    <div
-      style={{
-        textAlign: "center",
-        display: "flex",
-        flex: 1,
-        flexDirection: "column",
-      }}
-    >
-      <button onClick={getData}>Fetch Products</button>
+    <div className="product-dashboard">
+      <button className="fetch-button" onClick={getData}>Fetch Products</button>
       <h1>Product List</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Inventory</th>
-            <th>Last Modified</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data &&
-            data?.map((product) => (
-              <tr key={product._id}>
-                <td style={getHighlightStyle(product._id, "name")}>
-                  {product.name}
-                </td>
-                <td style={getHighlightStyle(product._id, "price")}>
-                  {product.price}
-                </td>
-                <td
+      <div className="product-list">
+        {data &&
+          data.map((product) => (
+            <div
+              className="product-card"
+              key={product._id}
+              style={getCardStyle(product)}
+            >
+              <div className="product-field">
+                <span className="field-label">Name:</span>
+                <span className="field-value">{product.name}</span>
+              </div>
+              <div className="product-field">
+                <span className="field-label">Price:</span>
+                <span className="field-value">{product.price}</span>
+              </div>
+              <div className="product-field">
+                <span className="field-label">Inventory:</span>
+                <span
+                  className="field-value"
                   style={
                     product.inventory <= minThreshold
                       ? { color: "red" }
@@ -156,14 +146,17 @@ const Products = () => {
                   }
                 >
                   {product.inventory}
-                </td>
-                <td style={getHighlightStyle(product._id, "lastModified")}>
+                </span>
+              </div>
+              <div className="product-field">
+                <span className="field-label">Last Modified:</span>
+                <span className="field-value">
                   {new Date(product.lastModified).toLocaleString()}
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+                </span>
+              </div>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
