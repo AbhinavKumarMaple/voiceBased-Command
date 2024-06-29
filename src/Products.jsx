@@ -22,7 +22,7 @@ const Products = () => {
 
       const updated = {};
       if (newData) {
-        newData?.forEach((newProduct) => {
+        newData.forEach((newProduct) => {
           const oldProduct = previousDataRef.current.find(
             (product) => product._id === newProduct._id
           );
@@ -73,6 +73,13 @@ const Products = () => {
       previousDataRef.current = newData;
     } catch (error) {
       console.error("Error fetching data:", error);
+      if (error.response) {
+        console.error("Error response:", error.response);
+      } else if (error.request) {
+        console.error("Error request:", error.request);
+      } else {
+        console.error("General error:", error.message);
+      }
     }
   };
 
@@ -126,7 +133,7 @@ const Products = () => {
         </thead>
         <tbody>
           {data &&
-            data?.map((product) => (
+            data.map((product) => (
               <tr key={product._id}>
                 <td style={getHighlightStyle(product._id, "name")}>
                   {product.name}
