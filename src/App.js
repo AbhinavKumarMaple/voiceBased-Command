@@ -180,14 +180,7 @@ function App() {
                   </div>
                 )}
               </div>
-              <div className="audio-container">
-                {audioURL && (
-                  <div className="audio-player">
-                    <h2>Recorded Audio:</h2>
-                    <audio controls src={audioURL}></audio>
-                  </div>
-                )}
-              </div>
+             
             </div>
           }/>
           <Route path="/products" element={<Products />} />

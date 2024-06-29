@@ -1,0 +1,41 @@
+.header-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  font-family: 'n';
+  background-color: #b7c9db;
+  padding: 10px 0;
+  z-index: 1000; /* Ensure it appears above other content */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px; /* Adjust padding as needed */
+}
+
+.logo {
+  width: 150px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center align navigation links */
+}
+
+.nav-link {
+  margin: 0 10px;
+  color: black;
+  text-decoration: none;
+  transition: color 0.3s ease; /* Smooth transition for color change on hover */
+}
+
+.nav-link:hover {
+  color: #336699; /* Change color on hover */
+}

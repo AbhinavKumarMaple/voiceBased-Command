@@ -1,5 +1,3 @@
-/* App.css */
-
 /* Base styles */
 body {
   font-family: Arial, sans-serif;
@@ -117,41 +115,61 @@ body {
 }
 
 .result {
-  text-align: left;
-  margin-top: 20px;
-  padding: 20px;
+  position: fixed;
+  bottom: 120px; /* Adjust based on your layout */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%; /* Adjust width as needed */
+  max-width: 800px; /* Example: Limit maximum width */
   background-color: #45668a;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgb(235, 232, 232); /* Added box shadow */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  z-index: 1000; /* Ensure it appears above other elements */
+  text-align: left; /* Align text to the left */
 }
 
 .result pre {
-  background-color: #000000; /* Dark blue background for response text */
-  color: #fff; /* White text color for response text */
+  background-color: #1d1818; /* Dark background for text */
+  color: #fff; /* White text color */
   padding: 10px;
   border-radius: 5px;
   overflow-x: auto;
+  white-space: pre-wrap; /* Allow text to wrap */
+  word-wrap: break-word; /* Break long words */
+  max-width: 100%; /* Ensure text does not overflow */
+  font-size: 16px; /* Adjust font size as needed */
+  line-height: 1.5; /* Improve readability with line height */
 }
 
 .result h2 {
-  color: #fdfcfc; /* Green header color */
+  color: #fdfcfc; /* Light text color for headers */
   margin-bottom: 10px;
 }
 
-.result pre {
-  background-color: #1d1818; /* Dark blue background for response text */
-  color: #fff; /* White text color for response text */
-  padding: 10px;
-  border-radius: 5px;
-  size:10px;
-  overflow-x: auto;
+@media (max-width: 768px) {
+  .mic-container {
+    bottom: 10px; /* Adjust mic button position for smaller screens */
+  }
+
+  .result {
+    width: 90%; /* Adjust result box width for smaller screens */
+    bottom: 140px; /* Adjust result box position for smaller screens */
+  }
 }
 
-.audio-container {
-  text-align: center;
-  margin-top: 20px;
-}
+@media (max-width: 480px) {
+  .mic-container {
+    bottom: 5px; /* Further adjust mic button position for very small screens */
+  }
 
-.audio-player {
-  display: none;
+  .result {
+    width: 95%; /* Further adjust result box width for very small screens */
+    bottom: 160px; /* Further adjust result box position for very small screens */
+  }
+
+  .mic-button {
+    font-size: 28px; /* Decrease mic button size for very small screens */
+    padding: 16px; /* Adjust mic button padding for very small screens */
+  }
 }

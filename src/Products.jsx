@@ -111,7 +111,7 @@ const Products = () => {
 
   const getCardStyle = (product) => {
     return product.inventory <= minThreshold
-      ? { backgroundColor: "#ffcccc" }
+      ? { backgroundColor: "#b30c00"  }
       : {};
   };
 
@@ -141,7 +141,7 @@ const Products = () => {
                   className="field-value"
                   style={
                     product.inventory <= minThreshold
-                      ? { color: "red" }
+                      ? { color: "white" }
                       : getHighlightStyle(product._id, "inventory")
                   }
                 >
