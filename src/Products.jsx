@@ -100,6 +100,22 @@ const Products = () => {
     acknowledgedProductsRef.current.add(product._id);
   };
 
+  const handleDelete = async (productId) => {
+    try {
+      const apiUrl = `${
+        process.env.REACT_APP_API_URL || "/api"
+      }/gemini/product/${productId}`;
+      await axios.delete(apiUrl);
+
+      // Update UI to remove the deleted product
+      setData(data.filter((product) => product._id !== productId));
+      alert(`Product ${productId} deleted successfully.`);
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      alert(`Error deleting product ${productId}. Please try again later.`);
+    }
+  };
+
   const getHighlightStyle = (productId, field) => {
     if (field === "inventory") {
       return updatedFields[productId] && updatedFields[productId][field]
@@ -111,13 +127,15 @@ const Products = () => {
 
   const getCardStyle = (product) => {
     return product.inventory <= minThreshold
-      ? { backgroundColor: "#b30c00"  }
+      ? { backgroundColor: "#b30c00" }
       : {};
   };
 
   return (
     <div className="product-dashboard">
-      <button className="fetch-button" onClick={getData}>Fetch Products</button>
+      <button className="fetch-button" onClick={getData}>
+        Fetch Products
+      </button>
       <h1>Product List</h1>
       <div className="product-list">
         {data &&
@@ -154,6 +172,12 @@ const Products = () => {
                   {new Date(product.lastModified).toLocaleString()}
                 </span>
               </div>
+              <button
+                className="delete-button"
+                onClick={() => handleDelete(product._id)}
+              >
+                Delete
+              </button>
             </div>
           ))}
       </div>
