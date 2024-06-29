@@ -5,6 +5,7 @@ const Products = () => {
   const [data, setData] = useState([]);
   const [updatedFields, setUpdatedFields] = useState({});
   const [triggerTTS, setTriggerTTS] = useState(null);
+  const [highlightHeaders, setHighlightHeaders] = useState(false);
   const previousDataRef = useRef([]);
   const acknowledgedProductsRef = useRef(new Set());
 
@@ -17,6 +18,7 @@ const Products = () => {
       const newData = response.data.message;
 
       const updated = {};
+      let belowThreshold = false;
       if (newData) {
         newData.forEach((newProduct) => {
           const oldProduct = previousDataRef.current.find(
@@ -46,12 +48,14 @@ const Products = () => {
               newProduct.inventory <= minThreshold &&
               !acknowledgedProductsRef.current.has(newProduct._id)
             ) {
+              belowThreshold = true;
               setTriggerTTS(newProduct);
             }
           }
         });
       }
 
+      setHighlightHeaders(belowThreshold);
       setData(newData);
       setUpdatedFields((prev) => ({ ...prev, ...updated }));
 
@@ -125,10 +129,10 @@ const Products = () => {
       <table>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Inventory</th>
-            <th>Last Modified</th>
+            <th style={{ color: highlightHeaders ? "red" : "black" }}>Name</th>
+            <th style={{ color: highlightHeaders ? "red" : "black" }}>Price</th>
+            <th style={{ color: highlightHeaders ? "red" : "black" }}>Inventory</th>
+            <th style={{ color: highlightHeaders ? "red" : "black" }}>Last Modified</th>
           </tr>
         </thead>
         <tbody>
