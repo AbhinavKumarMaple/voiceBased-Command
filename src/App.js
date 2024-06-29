@@ -3,6 +3,10 @@ import axios from "axios";
 import MicRecorder from "mic-recorder-to-mp3";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
+import { Route, Routes } from "react-router-dom";
+import Header from "./components/Header";
+import Products from "./Products";
+import About from "./components/About";
 import "./App.css";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
@@ -144,44 +148,53 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <div className="content">
-        {response && (
-          <div className="result">
-            <h2>Question:</h2>
-            <pre className="json">{JSON.stringify(response.pipelineResponse[0].output[0].source, null, 2)}</pre>
-            <h2>Answer:</h2>
-            <pre className="json">{JSON.stringify(result?.message, null, 2)}</pre>
-          </div>
-        )}
-      </div>
-      <div className="mic-container">
-        {!isLoading && (
-          <FontAwesomeIcon
-            icon={faMicrophone}
-            onClick={handleMicClick}
-            className={`mic-button ${isRecording ? "recording" : ""}`}
-          />
-        )}
-        {isLoading && (
-          <div className="mic-loading">
-            <div className="assistant-bubble">
-              <div className="dot1" />
-              <div className="dot2" />
-              <div className="dot3" />
+    <>
+      <Header />
+      <div className="App">
+        <Routes>
+          <Route path="/" element={
+            <div className="content">
+              {response && (
+                <div className="result">
+                  <h2>Question:</h2>
+                  <pre className="json">{JSON.stringify(response.pipelineResponse[0].output[0].source, null, 2)}</pre>
+                  <h2>Answer:</h2>
+                  <pre className="json">{JSON.stringify(result?.message, null, 2)}</pre>
+                </div>
+              )}
+              <div className="mic-container">
+                {!isLoading && (
+                  <FontAwesomeIcon
+                    icon={faMicrophone}
+                    onClick={handleMicClick}
+                    className={`mic-button ${isRecording ? "recording" : ""}`}
+                  />
+                )}
+                {isLoading && (
+                  <div className="mic-loading">
+                    <div className="assistant-bubble">
+                      <div className="dot1" />
+                      <div className="dot2" />
+                      <div className="dot3" />
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="audio-container">
+                {audioURL && (
+                  <div className="audio-player">
+                    <h2>Recorded Audio:</h2>
+                    <audio controls src={audioURL}></audio>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        )}
+          }/>
+          <Route path="/products" element={<Products />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
       </div>
-      <div className="audio-container">
-        {audioURL && (
-          <div className="audio-player">
-            <h2>Recorded Audio:</h2>
-            <audio controls src={audioURL}></audio>
-          </div>
-        )}
-      </div>
-    </div>
+    </>
   );
 }
 
