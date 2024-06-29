@@ -1,14 +1,12 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import TTSComponent from "./TTSComponent";
 
 const Products = () => {
-  console.log("products");
   const [data, setData] = useState([]);
   const [updatedFields, setUpdatedFields] = useState({});
   const [triggerTTS, setTriggerTTS] = useState(null);
-  console.log("triggerTTS", triggerTTS);
   const previousDataRef = useRef([]);
+  const acknowledgedProductsRef = useRef(new Set());
 
   // Define minimum threshold for product value
   const minThreshold = 30;
@@ -20,10 +18,11 @@ const Products = () => {
 
       const updated = {};
       if (newData) {
-        newData?.forEach((newProduct) => {
+        newData.forEach((newProduct) => {
           const oldProduct = previousDataRef.current.find(
             (product) => product._id === newProduct._id
           );
+
           if (oldProduct) {
             const updatedProductFields = {};
             if (oldProduct.name !== newProduct.name)
@@ -41,9 +40,12 @@ const Products = () => {
                 timestamp: Date.now(),
               };
             }
-            //   console.log("newProduct",newProduct)
-            // Check if product value falls below the threshold
-            if (newProduct.inventory <= minThreshold) {
+
+            // Check if product value falls below the threshold and if it hasn't been acknowledged
+            if (
+              newProduct.inventory <= minThreshold &&
+              !acknowledgedProductsRef.current.has(newProduct._id)
+            ) {
               setTriggerTTS(newProduct);
             }
           }
@@ -59,7 +61,7 @@ const Products = () => {
         setUpdatedFields((prev) => {
           const newUpdatedFields = { ...prev };
           Object.keys(newUpdatedFields).forEach((id) => {
-            if (now - newUpdatedFields[id].timestamp > 30000) {
+            if (now - newUpdatedFields[id].timestamp > 10000) {
               delete newUpdatedFields[id];
             }
           });
@@ -76,10 +78,32 @@ const Products = () => {
 
   useEffect(() => {
     getData(); // Initial fetch
+    const interval = setInterval(getData, 10000); // Fetch data every 10 seconds
 
     // Cleanup interval on component unmount
-    return () => {};
+    return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (triggerTTS) {
+      const text = `${triggerTTS.name} का स्टॉक कम है। केवल ${triggerTTS.inventory} बचे हैं।`;
+      speakText(text);
+      showAlert(triggerTTS);
+    }
+  }, [triggerTTS]);
+
+  const speakText = (text) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "hi-IN"; // Set the language to Hindi
+    utterance.onerror = (e) => console.error("Speech synthesis error:", e);
+    speechSynthesis.speak(utterance);
+  };
+
+  const showAlert = (product) => {
+    const text = `${product.name} का स्टॉक कम है। केवल ${product.inventory} बचे हैं।`;
+    alert(text);
+    acknowledgedProductsRef.current.add(product._id);
+  };
 
   const getHighlightStyle = (productId, field) => {
     return updatedFields[productId] && updatedFields[productId][field]
@@ -109,7 +133,7 @@ const Products = () => {
         </thead>
         <tbody>
           {data &&
-            data?.map((product) => (
+            data.map((product) => (
               <tr key={product._id}>
                 <td style={getHighlightStyle(product._id, "name")}>
                   {product.name}
@@ -127,13 +151,6 @@ const Products = () => {
             ))}
         </tbody>
       </table>
-      {triggerTTS && (
-        <TTSComponent
-          name={triggerTTS?.name}
-          inventory={triggerTTS?.inventory}
-          price={triggerTTS?.price}
-        />
-      )}
     </div>
   );
 };

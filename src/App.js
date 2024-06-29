@@ -19,6 +19,7 @@ function App() {
 
   useEffect(() => {
     if (result?.message) {
+      console.log("Speaking the text:", result.message);
       speakText(result.message, sourceLanguage);
     }
   }, [result, sourceLanguage]);
@@ -138,6 +139,7 @@ function App() {
   const speakText = (text, language) => {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = language;
+    utterance.onerror = (e) => console.error("Speech synthesis error:", e);
     speechSynthesis.speak(utterance);
   };
 
@@ -147,9 +149,9 @@ function App() {
         {response && (
           <div className="result">
             <h2>Question:</h2>
-            <pre>{JSON.stringify(response.pipelineResponse[0].output[0].source)}</pre>
+            <pre className="json">{JSON.stringify(response.pipelineResponse[0].output[0].source, null, 2)}</pre>
             <h2>Answer:</h2>
-            <pre>{JSON.stringify(result?.message)}</pre>
+            <pre className="json">{JSON.stringify(result?.message, null, 2)}</pre>
           </div>
         )}
       </div>
@@ -163,12 +165,10 @@ function App() {
         )}
         {isLoading && (
           <div className="mic-loading">
-            
             <div className="assistant-bubble">
               <div className="dot1" />
               <div className="dot2" />
               <div className="dot3" />
-    
             </div>
           </div>
         )}
