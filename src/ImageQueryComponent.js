@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-
 import MicRecorder from "mic-recorder-to-mp3";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
@@ -27,10 +26,11 @@ function ImageQueryComponent() {
 
   const handleCustomQueryChange = (e) => {
     setCustomQuery(e.target.value);
+    setResult(""); // Reset result when custom query changes
     console.log("Custom query changed:", e.target.value);
   };
 
-  const handleQuery = async () => {
+  const handleQuery = async (queryText) => {
     if (!image) {
       alert("Please upload an image first.");
       return;
@@ -39,7 +39,7 @@ function ImageQueryComponent() {
     setQuerySent(true); // Query has been sent, show loading icon
     const formData = new FormData();
     formData.append("image", image);
-    formData.append("customQuery", customQuery);
+    formData.append("customQuery", queryText);
     formData.append("base64Audio", base64Audio); // Append recorded audio as base64
 
     try {
@@ -164,8 +164,9 @@ function ImageQueryComponent() {
       ) {
         const textResult =
           res.data.pipelineResponse[0].output[0].source.toLowerCase();
-        setCustomQuery(textResult); // Set the converted text as custom query
+        setCustomQuery(textResult); // Update the input field with recognized text
         console.log("Converted text:", textResult);
+        handleQuery(textResult); // Automatically send the query after converting audio to text
       }
 
       setIsLoading(false);
@@ -212,7 +213,7 @@ function ImageQueryComponent() {
           onChange={handleCustomQueryChange}
         />
         {!querySent ? (
-          <button className="query-button" onClick={handleQuery}>
+          <button className="query-button" onClick={() => handleQuery(customQuery)}>
             Send Query
           </button>
         ) : (

@@ -158,35 +158,47 @@
   width: 50px;
   height: 20px;
 }
-
-.dot1,
-.dot2,
-.dot3 {
-  width: 10px;
-  height: 10px;
-  background-color: #007bff;
+.dot1, .dot2, .dot3 {
+  position: absolute;
+  width: 20px; /* Increased dot size */
+  height: 20px; /* Increased dot size */
+  background-color: #ffa500; /* Orange color */
   border-radius: 50%;
-  display: inline-block;
-  animation: bounce 1s infinite ease-in-out;
+  animation: assistant-pulse 1s infinite;
+}
+
+.dot1 {
+  left: 0;
+  animation-delay: 0s;
 }
 
 .dot2 {
-  animation-delay: 0.3s;
+  left: 20px; /* Adjusted position */
+  animation-delay: 0.2s;
+  background-color: white; /* White color */
 }
 
 .dot3 {
-  animation-delay: 0.6s;
+  left: 40px; /* Adjusted position */
+  animation-delay: 0.4s;
+  background-color: green; /* Blue color */
 }
 
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
+@keyframes assistant-pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.7;
   }
   50% {
-    transform: translateY(-10px);
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.5);
+    opacity: 0.7;
   }
 }
+
 .file-name {
   margin-left: 10px; /* Adjust margin as needed */
   font-size: 14px; /* Adjust font size as needed */
