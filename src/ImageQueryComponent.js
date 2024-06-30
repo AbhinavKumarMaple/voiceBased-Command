@@ -17,6 +17,7 @@ function ImageQueryComponent() {
   const [base64Audio, setBase64Audio] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [language, setLanguage] = useState("en-US"); // Default language for speech synthesis
+  const [querySent, setQuerySent] = useState(false); // Track if query has been sent
 
   const handleImageUpload = (e) => {
     setImage(e.target.files[0]);
@@ -35,6 +36,7 @@ function ImageQueryComponent() {
       return;
     }
 
+    setQuerySent(true); // Query has been sent, show loading icon
     const formData = new FormData();
     formData.append("image", image);
     formData.append("customQuery", customQuery);
@@ -59,6 +61,8 @@ function ImageQueryComponent() {
     } catch (error) {
       console.error("Error querying the image:", error);
       setResult("Error querying the image.");
+    } finally {
+      setQuerySent(false); // Reset query sent state
     }
   };
 
@@ -187,17 +191,27 @@ function ImageQueryComponent() {
     <div className="ImageQueryComponent">
       <h1 className="image-query-title">Invoice Query using Voice</h1>
       <div className="query-section">
-        <p>Upload an image to query:</p>
+        <p>Step 1: Upload an image to query:</p>
         <input type="file" onChange={handleImageUpload} />
-        <p>Enter a custom query:</p>
+        <p>Step 2: Enter a custom query or use voice</p>
         <input
           type="text"
           value={customQuery}
           onChange={handleCustomQueryChange}
         />
-        <button className="query-button" onClick={handleQuery}>
-          Query Image
-        </button>
+        {!querySent ? (
+          <button className="query-button" onClick={handleQuery}>
+            Send Query
+          </button>
+        ) : (
+          <div className="loading-icon">
+            <div className="assistant-bubble">
+              <div className="dot1" />
+              <div className="dot2" />
+              <div className="dot3" />
+            </div>
+          </div>
+        )}
         <br />
         <hr />
         <div className="mic-container">

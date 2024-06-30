@@ -1,57 +1,149 @@
 .ImageQueryComponent {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.image-query-title {
+  font-size: 24px;
   text-align: center;
-  margin-top: 50px;
+  margin-bottom: 20px;
 }
 
 .query-section {
   margin-bottom: 20px;
 }
 
-input[type="file"],
-input[type="text"],
-button {
-  margin: 10px;
+.query-section p {
+  font-weight: bold;
+}
+
+.input-field {
+  width: 100%;
   padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   font-size: 16px;
 }
 
-.query-button {
-  cursor: pointer;
+.query-button,
+.speak-button,
+.ok-button {
+  border-radius: 20px;
   background-color: #007bff;
   color: white;
   border: none;
   padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.query-button:hover {
+.query-button:hover,
+.speak-button:hover,
+.ok-button:hover {
   background-color: #0056b3;
 }
 
+.mic-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.mic-button {
+  font-size: 24px;
+  cursor: pointer;
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.mic-button.recording {
+  color: red;
+}
+
+.result-section {
+  margin-top: 20px;
+}
+
 .result {
-  width: 80%; /* Example: Set a relative width */
-  max-width: 600px; /* Example: Set a maximum width */
-  padding: 20px;
-  box-sizing: border-box; /* Ensure padding is included in width calculation */
   border: 1px solid #ccc;
-  background-color: #007efc; /* Change background color */
-  text-align: left; /* Ensure text alignment */
-  margin-top: 10px; /* Adjust margin for space below submit button */
-  margin-left: auto; /* Center align horizontally */
-  margin-right: auto;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
 }
 
-.result p {
-  word-wrap: break-word; /* Ensure long words wrap */
-  margin: 0; /* Remove default margins */
+.result h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 
-.image-query-title {
-  margin-bottom: 20px;
+.json {
+  white-space: pre-wrap;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
-@media (max-width: 768px) {
-  .result {
-    width: 90%; /* Adjust width for smaller screens */
-    max-width: 100%; /* Full width on smaller screens */
+.language-selector {
+  margin-top: 20px;
+}
+
+.language-selector p {
+  font-weight: bold;
+}
+
+.language-selector select {
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.loading-icon {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.assistant-bubble {
+  display: inline-block;
+  position: relative;
+  width: 50px;
+  height: 20px;
+}
+
+.dot1,
+.dot2,
+.dot3 {
+  width: 10px;
+  height: 10px;
+  background-color: #007bff;
+  border-radius: 50%;
+  display: inline-block;
+  animation: bounce 1s infinite ease-in-out;
+}
+
+.dot2 {
+  animation-delay: 0.3s;
+}
+
+.dot3 {
+  animation-delay: 0.6s;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
   }
 }

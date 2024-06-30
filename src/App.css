@@ -35,7 +35,7 @@ body {
 }
 
 .mic-button {
-  font-size: 36px;
+  font-size: 36px; /* Initial size for desktop */
   color: #faf8f8;
   background-color: #000103;
   padding: 20px;
@@ -70,7 +70,7 @@ body {
   position: absolute;
   width: 20px; /* Increased dot size */
   height: 20px; /* Increased dot size */
-  background-color: #FFA500; /* Orange color */
+  background-color: #ffa500; /* Orange color */
   border-radius: 50%;
   animation: assistant-pulse 1s infinite;
 }
