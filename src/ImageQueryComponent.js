@@ -195,6 +195,7 @@ function ImageQueryComponent() {
         <input type="file" onChange={handleImageUpload} />
         <p>Step 2: Enter a custom query or use voice</p>
         <input
+          className="input-field"
           type="text"
           value={customQuery}
           onChange={handleCustomQueryChange}
@@ -251,7 +252,7 @@ function ImageQueryComponent() {
           )}
         </div>
         <div className="language-selector">
-          <p>Select Language for Speech Synthesis:</p>
+          <p>Select Language for voice:</p>
           <select
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
