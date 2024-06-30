@@ -232,12 +232,7 @@ function ImageQueryComponent() {
             </div>
           )}
         </div>
-        {audioURL && (
-          <audio controls>
-            <source src={audioURL} type="audio/mp3" />
-            Your browser does not support the audio element.
-          </audio>
-        )}
+        
         <div className="result-section">
           {result && (
             <div className="result">
