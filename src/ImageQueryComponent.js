@@ -192,7 +192,18 @@ function ImageQueryComponent() {
       <h1 className="image-query-title">Invoice Query using Voice</h1>
       <div className="query-section">
         <p>Step 1: Upload an image to query:</p>
-        <input type="file" onChange={handleImageUpload} />
+        <div className="file-input-container">
+          <label htmlFor="file-upload" className="file-input-label">
+            Select Image
+          </label>
+          <input
+            id="file-upload"
+            className="file-input"
+            type="file"
+            onChange={handleImageUpload}
+          />
+          {image && <span className="file-name">{image.name}</span>}
+        </div>
         <p>Step 2: Enter a custom query or use voice</p>
         <input
           className="input-field"
@@ -213,7 +224,6 @@ function ImageQueryComponent() {
             </div>
           </div>
         )}
-        <br />
         <hr />
         <div className="mic-container">
           {!isLoading && (
@@ -233,7 +243,6 @@ function ImageQueryComponent() {
             </div>
           )}
         </div>
-        
         <div className="result-section">
           {result && (
             <div className="result">

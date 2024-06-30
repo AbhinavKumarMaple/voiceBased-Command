@@ -1,18 +1,18 @@
 .ImageQueryComponent {
-  max-width: 900px; /* Increased width */
-  margin: 30px auto; /* Increased margin */
-  padding: 50px; /* Increased padding */
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 50px;
   border: 1px solid #ccc;
-  border-radius: 15px; /* Slightly reduced border radius */
+  border-radius: 15px;
   background-color: #000000;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   font-family: Arial, sans-serif;
 }
 
 .image-query-title {
-  font-size: 35px; /* Increased font size */
+  font-size: 35px;
   text-align: center;
-  margin-bottom: 44px; /* Increased margin */
+  margin-bottom: 44px;
 }
 
 .query-section {
@@ -25,11 +25,11 @@
 
 .input-field {
   width: 100%;
-  padding: 12px; /* Increased padding */
-  margin: 12px 0; /* Increased margin */
+  padding: 12px;
+  margin: 12px 0;
   border: 1px solid #ccc;
   border-radius: 20px;
-  font-size: 18px; /* Increased font size */
+  font-size: 18px;
 }
 
 .file-input-container {
@@ -41,7 +41,7 @@
 }
 
 .file-input {
-  font-size: 18px; /* Increased font size */
+  font-size: 18px;
   position: absolute;
   opacity: 0;
   top: 0;
@@ -53,9 +53,9 @@
 }
 
 .file-input-label {
-  display: block;
-  padding: 12px 24px; /* Increased padding */
-  background-color: #007bff;
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #007bff; /* Blue color */
   color: white;
   border: none;
   border-radius: 20px;
@@ -77,10 +77,10 @@
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 12px 24px; /* Increased padding */
+  padding: 12px 24px;
   cursor: pointer;
-  font-size: 18px; /* Increased font size */
-  margin-top: 12px; /* Increased margin */
+  font-size: 18px;
+  margin-top: 12px;
   transition: background-color 0.3s ease;
   font-weight: bold;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -94,18 +94,20 @@
 
 .mic-container {
   text-align: center;
-  margin-top: 12px; /* Increased margin */
+  margin-top: 12px;
 }
 
 .mic-button {
-  font-size: 28px; /* Increased font size */
+  font-size: 28px;
   cursor: pointer;
   color: #007bff;
   transition: color 0.3s ease;
 }
 
 .mic-button.recording {
-  color: red;
+    color: rgb(27, 1, 1);
+    background-color: red
+  
 }
 
 .result-section {
@@ -115,13 +117,13 @@
 .result {
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 12px; /* Increased padding */
-  margin-top: 12px; /* Increased margin */
-  font-size: 18px; /* Increased font size */
+  padding: 12px;
+  margin-top: 12px;
+  font-size: 18px;
 }
 
 .result h2 {
-  font-size: 22px; /* Increased font size */
+  font-size: 22px;
   margin-bottom: 10px;
 }
 
@@ -184,4 +186,9 @@
   50% {
     transform: translateY(-10px);
   }
+}
+.file-name {
+  margin-left: 10px; /* Adjust margin as needed */
+  font-size: 14px; /* Adjust font size as needed */
+  color: #fcfcfc; /* Adjust color as needed */
 }
