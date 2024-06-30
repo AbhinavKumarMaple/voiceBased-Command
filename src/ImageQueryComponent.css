@@ -1,0 +1,57 @@
+.ImageQueryComponent {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.query-section {
+  margin-bottom: 20px;
+}
+
+input[type="file"],
+input[type="text"],
+button {
+  margin: 10px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.query-button {
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+}
+
+.query-button:hover {
+  background-color: #0056b3;
+}
+
+.result {
+  width: 80%; /* Example: Set a relative width */
+  max-width: 600px; /* Example: Set a maximum width */
+  padding: 20px;
+  box-sizing: border-box; /* Ensure padding is included in width calculation */
+  border: 1px solid #ccc;
+  background-color: #007efc; /* Change background color */
+  text-align: left; /* Ensure text alignment */
+  margin-top: 10px; /* Adjust margin for space below submit button */
+  margin-left: auto; /* Center align horizontally */
+  margin-right: auto;
+}
+
+.result p {
+  word-wrap: break-word; /* Ensure long words wrap */
+  margin: 0; /* Remove default margins */
+}
+
+.image-query-title {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .result {
+    width: 90%; /* Adjust width for smaller screens */
+    max-width: 100%; /* Full width on smaller screens */
+  }
+}

@@ -8,12 +8,15 @@ import Header from "./components/Header";
 import Products from "./Products";
 import About from "./components/About";
 import "./App.css";
+import ImageQueryComponent from "./ImageQueryComponent";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 function App() {
   const [sourceLanguage, setSourceLanguage] = useState("hi");
-  const [asrServiceId, setAsrServiceId] = useState("ai4bharat/conformer-hi-gpu--t4");
+  const [asrServiceId, setAsrServiceId] = useState(
+    "ai4bharat/conformer-hi-gpu--t4"
+  );
   const [audioURL, setAudioURL] = useState("");
   const [base64Audio, setBase64Audio] = useState("");
   const [response, setResponse] = useState(null);
@@ -102,7 +105,8 @@ function App() {
         payload,
         {
           headers: {
-            Authorization: "HAAdDttl-hYhfAlV2sjzG9z7HpLjmgyDJcZVvJwJOaw085g_dMqM1eSVwE8hfywB",
+            Authorization:
+              "HAAdDttl-hYhfAlV2sjzG9z7HpLjmgyDJcZVvJwJOaw085g_dMqM1eSVwE8hfywB",
             Accept: " */*",
             "User-Agent": "Thunder Client (https://www.thunderclient.com)",
             "Content-Type": "application/json",
@@ -152,39 +156,50 @@ function App() {
       <Header />
       <div className="App">
         <Routes>
-          <Route path="/" element={
-            <div className="content">
-              {response && (
-                <div className="result">
-                  <h2>Question:</h2>
-                  <pre className="json">{JSON.stringify(response.pipelineResponse[0].output[0].source, null, 2)}</pre>
-                  <h2>Answer:</h2>
-                  <pre className="json">{JSON.stringify(result?.message, null, 2)}</pre>
-                </div>
-              )}
-              <div className="mic-container">
-                {!isLoading && (
-                  <FontAwesomeIcon
-                    icon={faMicrophone}
-                    onClick={handleMicClick}
-                    className={`mic-button ${isRecording ? "recording" : ""}`}
-                  />
-                )}
-                {isLoading && (
-                  <div className="mic-loading">
-                    <div className="assistant-bubble">
-                      <div className="dot1" />
-                      <div className="dot2" />
-                      <div className="dot3" />
-                    </div>
+          <Route
+            path="/"
+            element={
+              <div className="content">
+                {response && (
+                  <div className="result">
+                    <h2>Question:</h2>
+                    <pre className="json">
+                      {JSON.stringify(
+                        response.pipelineResponse[0].output[0].source,
+                        null,
+                        2
+                      )}
+                    </pre>
+                    <h2>Answer:</h2>
+                    <pre className="json">
+                      {JSON.stringify(result?.message, null, 2)}
+                    </pre>
                   </div>
                 )}
+                <div className="mic-container">
+                  {!isLoading && (
+                    <FontAwesomeIcon
+                      icon={faMicrophone}
+                      onClick={handleMicClick}
+                      className={`mic-button ${isRecording ? "recording" : ""}`}
+                    />
+                  )}
+                  {isLoading && (
+                    <div className="mic-loading">
+                      <div className="assistant-bubble">
+                        <div className="dot1" />
+                        <div className="dot2" />
+                        <div className="dot3" />
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-             
-            </div>
-          }/>
+            }
+          />
           <Route path="/products" element={<Products />} />
           <Route path="/about" element={<About />} />
+          <Route path="/image-query" element={<ImageQueryComponent />} />
         </Routes>
       </div>
     </>
