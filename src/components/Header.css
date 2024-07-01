@@ -20,9 +20,7 @@
 }
 
 .logo {
-  height: auto; /* Ensure the logo's height adjusts automatically */
-  max-height: 40px; /* Maximum height of the logo */
-  margin-left: 10px; /* Adjust margin as needed */
+  width: 150px; /* Initial width of the logo */
 }
 
 .nav-links {
@@ -43,6 +41,9 @@
 }
 
 @media (max-width: 1024px) {
+  .logo {
+    width: 120px; /* Adjusted width for tablets */
+  }
   .nav-link {
     font-size: 20px;
     margin: 0 10px; /* Further reduced margin for tablets */
@@ -50,6 +51,9 @@
 }
 
 @media (max-width: 768px) {
+  .logo {
+    width: 100px; /* Adjusted width for smaller screens */
+  }
   .nav-link {
     font-size: 18px;
     margin: 0 5px; /* Adjusted margin for smaller screens */
@@ -57,13 +61,11 @@
 }
 
 @media (max-width: 480px) {
+  .logo {
+    width: 80px; /* Adjusted width for mobile devices */
+  }
   .nav-link {
     font-size: 16px; /* Adjusted font size for mobile devices */
     margin: 0 3px; /* Fine-tuned margin for smaller screens */
-  }
-
-  .logo {
-    max-height: 30px; /* Adjusted logo size for smaller screens */
-    margin-left: 5px; /* Adjusted margin for smaller screens */
   }
 }
