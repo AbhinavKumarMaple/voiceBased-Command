@@ -19,8 +19,10 @@ body {
 }
 
 .content {
-  text-align: center;
+  text-align: left;
+  margin-top: 40px; /* Added margin-top for the first heading */
   margin-bottom: 20px;
+  padding: 0 20px; /* Added padding for better readability */
 }
 
 .mic-container {
@@ -66,7 +68,9 @@ body {
   position: relative;
 }
 
-.dot1, .dot2, .dot3 {
+.dot1,
+.dot2,
+.dot3 {
   position: absolute;
   width: 20px; /* Increased dot size */
   height: 20px; /* Increased dot size */
@@ -172,4 +176,20 @@ body {
     font-size: 28px; /* Decrease mic button size for very small screens */
     padding: 16px; /* Adjust mic button padding for very small screens */
   }
+}
+
+/* Additional styles for content area */
+.content-heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 40px;
+
+  margin-bottom: 10px;
+}
+
+.content-description {
+  font-size: 18px;
+  font-weight: bold; /* Make text bold */
+  line-height: 1.6;
+  margin-bottom: 20px;
 }
