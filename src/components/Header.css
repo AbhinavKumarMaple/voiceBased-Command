@@ -20,43 +20,19 @@
 }
 
 .logo {
-  width: 150px;
-}
-
-.nav-toggle {
-  display: none; /* Hide checkbox by default */
-}
-
-.nav-toggle-label {
-  cursor: pointer;
-  padding: 10px;
-}
-
-.nav-toggle-label span {
-  display: block;
-  width: 25px;
-  height: 2px;
-  background-color: black;
-  margin-bottom: 5px;
-  transition: transform 0.3s ease-in-out;
-}
-
-.nav-toggle:checked + .nav-links {
-  max-height: 200px; /* Adjust as needed */
+  height: auto; /* Ensure the logo's height adjusts automatically */
+  max-height: 40px; /* Maximum height of the logo */
+  margin-left: 10px; /* Adjust margin as needed */
 }
 
 .nav-links {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-height: none; /* Ensure links can expand */
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
 }
 
 .nav-link {
-  margin: 10px 0;
+  margin: 0 15px; /* Adjusted margin for better spacing */
   color: black;
   text-decoration: none;
   transition: color 0.3s ease;
@@ -66,19 +42,28 @@
   color: #336699;
 }
 
-@media (min-width: 768px) {
-  .nav-toggle {
-    display: none; /* Hide toggle on larger screens */
-  }
-
-  .nav-links {
-    display: flex;
-    max-height: none !important;
-    flex-direction: row; /* Ensure links are horizontal on larger screens */
-    justify-content: center; /* Center align links horizontally */
-  }
-
+@media (max-width: 1024px) {
   .nav-link {
-    margin: 0 10px; /* Add margin around links */
+    font-size: 20px;
+    margin: 0 10px; /* Further reduced margin for tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-link {
+    font-size: 18px;
+    margin: 0 5px; /* Adjusted margin for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-link {
+    font-size: 16px; /* Adjusted font size for mobile devices */
+    margin: 0 3px; /* Fine-tuned margin for smaller screens */
+  }
+
+  .logo {
+    max-height: 30px; /* Adjusted logo size for smaller screens */
+    margin-left: 5px; /* Adjusted margin for smaller screens */
   }
 }
