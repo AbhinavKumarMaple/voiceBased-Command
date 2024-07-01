@@ -8,34 +8,77 @@
   font-family: "n";
   background-color: #b7c9db;
   padding: 10px 0;
-  z-index: 1000; /* Ensure it appears above other content */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px; /* Adjust padding as needed */
+  padding: 0 20px;
 }
 
 .logo {
   width: 150px;
 }
 
+.nav-toggle {
+  display: none; /* Hide checkbox by default */
+}
+
+.nav-toggle-label {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.nav-toggle-label span {
+  display: block;
+  width: 25px;
+  height: 2px;
+  background-color: black;
+  margin-bottom: 5px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-toggle:checked + .nav-links {
+  max-height: 200px; /* Adjust as needed */
+}
+
 .nav-links {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center; /* Center align navigation links */
+  justify-content: center;
+  max-height: none; /* Ensure links can expand */
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
 }
 
 .nav-link {
-  margin: 0 10px;
+  margin: 10px 0;
   color: black;
   text-decoration: none;
-  transition: color 0.3s ease; /* Smooth transition for color change on hover */
+  transition: color 0.3s ease;
 }
 
 .nav-link:hover {
-  color: #336699; /* Change color on hover */
+  color: #336699;
+}
+
+@media (min-width: 768px) {
+  .nav-toggle {
+    display: none; /* Hide toggle on larger screens */
+  }
+
+  .nav-links {
+    display: flex;
+    max-height: none !important;
+    flex-direction: row; /* Ensure links are horizontal on larger screens */
+    justify-content: center; /* Center align links horizontally */
+  }
+
+  .nav-link {
+    margin: 0 10px; /* Add margin around links */
+  }
 }

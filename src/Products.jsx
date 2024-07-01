@@ -154,23 +154,21 @@ const Products = () => {
     }
   };
 
- const speakText = (text) => {
-  // Cancel any ongoing speech synthesis
-  speechSynthesis.cancel();
+  const speakText = (text) => {
+    // Cancel any ongoing speech synthesis
+    speechSynthesis.cancel();
 
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "hi-IN";
-  utterance.onerror = (e) => console.error("Speech synthesis error:", e);
-  speechSynthesis.speak(utterance);
-};
-
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "hi-IN";
+    utterance.onerror = (e) => console.error("Speech synthesis error:", e);
+    speechSynthesis.speak(utterance);
+  };
 
   const showAlert = (product) => {
     const text = `${product.name} का स्टॉक कम है। केवल ${product.inventory} बचे हैं।`;
     alert(text);
     acknowledgedProductsRef.current.add(product._id);
   };
-  
 
   const getData = async () => {
     try {
@@ -292,3 +290,4 @@ const Products = () => {
 };
 
 export default Products;
+
