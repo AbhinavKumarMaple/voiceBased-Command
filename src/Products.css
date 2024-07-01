@@ -29,6 +29,17 @@
   max-width: 1200px;
 }
 
+.fetch-button {
+  padding: 10px 20px; /* Adjust padding as per your design */
+  margin-bottom: 10px; /* Add margin bottom to separate from header */
+  margin-top: 50px; /* Add margin bottom to separate from header */
+  background-color: #007bff; /* Blue color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .product-card {
   background-color: #1723d3;
   padding: 20px;
@@ -51,4 +62,8 @@
 
 .field-value {
   margin-left: 10px;
+}
+.product-card.highlighted {
+  transform: scale(1.1); /* Example of highlighting effect */
+  box-shadow: 0 0 10px #ffca28; /* Example of highlighting effect */
 }
