@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MicRecorder from "mic-recorder-to-mp3";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
+import { faMicrophone, faTimes } from "@fortawesome/free-solid-svg-icons"; // Import faTimes for the close button
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Products from "./Products";
@@ -23,6 +23,7 @@ function App() {
   const [isRecording, setIsRecording] = useState(false);
   const [result, setResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isResultVisible, setIsResultVisible] = useState(true); // State to manage result box visibility
 
   useEffect(() => {
     if (result?.message) {
@@ -135,6 +136,7 @@ function App() {
         );
 
         setResult(secondApiResponse.data);
+        setIsResultVisible(true); // Show result box when new result is received
         setIsLoading(false);
       }
     } catch (error) {
@@ -151,6 +153,10 @@ function App() {
     speechSynthesis.speak(utterance);
   };
 
+  const handleCloseResult = () => {
+    setIsResultVisible(false);
+  };
+
   return (
     <>
       <Header />
@@ -160,21 +166,40 @@ function App() {
             path="/"
             element={
               <div className="content">
-              <div className="content-heading">Streamlined Inventory Management with Voice Commands</div>
-               <hr/>
-              <div className="content-description">
-                <p>
-                  Manually managing inventory is time-consuming and error-prone, especially for small businesses with limited resources and expertise. Existing solutions often require manual data entry, hindering efficiency and accuracy.
-                </p>
-                <p>
-                  Our product integrates advanced voice command technology and image detection to offer a seamless solution for sellers. It allows real-time inventory checks and updates using voice commands in multiple languages, reducing the need for manual data entry and improving operational efficiency.
-                </p>
-                <p>
-                  Key features include receiving voice-based alerts and notifications when stock levels reach predefined thresholds, facilitating proactive inventory management. The customizable voice commands streamline specific inventory tasks, enhancing overall productivity and reducing workload.
-                </p>
-              </div>
-                {response && (
+                <div className="content-heading">
+                  Streamlined Inventory Management with Voice Commands
+                </div>
+                <hr />
+                <div className="content-description">
+                  <p>
+                    Manually managing inventory is time-consuming and
+                    error-prone, especially for small businesses with limited
+                    resources and expertise. Existing solutions often require
+                    manual data entry, hindering efficiency and accuracy.
+                  </p>
+                  <p>
+                    Our product integrates advanced voice command technology and
+                    image detection to offer a seamless solution for sellers. It
+                    allows real-time inventory checks and updates using voice
+                    commands in multiple languages, reducing the need for manual
+                    data entry and improving operational efficiency.
+                  </p>
+                  <p>
+                    Key features include receiving voice-based alerts and
+                    notifications when stock levels reach predefined thresholds,
+                    facilitating proactive inventory management. The
+                    customizable voice commands streamline specific inventory
+                    tasks, enhancing overall productivity and reducing workload.
+                  </p>
+                </div>
+                {response && isResultVisible && (
                   <div className="result">
+                    <button
+                      className="close-button"
+                      onClick={handleCloseResult}
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </button>
                     <h2>Question:</h2>
                     <pre className="json">
                       {JSON.stringify(
