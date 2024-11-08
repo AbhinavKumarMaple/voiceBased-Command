@@ -1,11 +1,16 @@
 .ImageQueryComponent {
     font-family: 'Arial', sans-serif;
     color: #333;
-    max-width: 900px;
-    margin: 0 auto;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
     padding: 20px;
     background-color: #f9f9f9;
-    border-radius: 10px;
+    border-radius: 0; /* Remove rounding to cover full page */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .query-section {
@@ -38,6 +43,7 @@
 
 .input-field {
     width: 100%;
+    max-width: 500px; /* Optional to control input width */
     padding: 12px;
     margin-top: 15px;
     border: 1px solid #ddd;
@@ -67,12 +73,14 @@
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
+    width: 90%; /* Full-width style for larger displays */
 }
 
 .result-flex {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    width: 100%;
 }
 
 .result-image {
@@ -166,7 +174,7 @@ h2 {
     margin-top: 10px;
     text-align: center;
     max-width: 100%;
-    margin-bottom: 10px; /* Space below the preview */
+    margin-bottom: 10px;
 }
 
 .uploaded-image {
