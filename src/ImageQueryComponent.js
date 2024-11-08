@@ -31,7 +31,7 @@ function ImageQueryComponent() {
 
         try {
             const response = await axios.post(
-                "http://localhost:5000/query-image",
+                "https://invoice-stocksen-hirdesh-mewadas-projects.vercel.app/query-image",
                 formData,
                 {
                     headers: {
