@@ -6,16 +6,17 @@
     margin: 0;
     padding: 20px;
     background-color: #f9f9f9;
-    border-radius: 0; /* Remove rounding to cover full page */
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    overflow-y: auto;
 }
 
 .query-section {
     text-align: center;
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .file-input-container {
@@ -43,7 +44,7 @@
 
 .input-field {
     width: 100%;
-    max-width: 500px; /* Optional to control input width */
+    max-width: 500px;
     padding: 12px;
     margin-top: 15px;
     border: 1px solid #ddd;
@@ -65,6 +66,8 @@
 .result-section {
     margin-top: 20px;
     text-align: center;
+    width: 100%;
+    max-width: 800px;
 }
 
 .result {
@@ -73,46 +76,50 @@
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-    width: 90%; /* Full-width style for larger displays */
+    width: 100%;
+    overflow-y: auto;
+    max-height: 500px; /* Adds scrolling if the result is large */
 }
 
 .result-flex {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    width: 100%;
+    flex-wrap: wrap; /* Allows wrapping for responsiveness */
 }
 
 .result-image {
-    width: 40%; /* Image takes up 40% of the width */
+    width: 100%;
+    max-width: 300px;
     padding-right: 20px;
 }
 
 .product-image {
     width: 100%;
-    max-width: 300px;
     border-radius: 8px;
     object-fit: cover;
 }
 
 .result-content {
-    width: 60%; /* Details take up 60% of the width */
+    width: 100%;
+    max-width: 500px;
 }
 
 .result-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* Three equal-width columns */
-    grid-gap: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
     margin-top: 20px;
 }
 
 .result-item {
     display: flex;
-    flex-direction: column; /* Stack the label above the value */
-    align-items: flex-start; /* Align text to the left */
+    flex-direction: column;
+    align-items: flex-start;
     padding: 15px;
     background-color: #f9f9f9;
     border-radius: 5px;
+    flex-basis: calc(33.333% - 20px); /* Responsive columns */
 }
 
 .result-item span {
@@ -124,12 +131,6 @@
 .result-item span:first-child {
     font-weight: bold;
     text-transform: capitalize;
-}
-
-h2 {
-    font-size: 1.8rem;
-    color: #333;
-    margin-bottom: 25px;
 }
 
 .loading-icon {
@@ -178,18 +179,9 @@ h2 {
 }
 
 .uploaded-image {
-    width: 80px; /* Set width for smaller preview */
-    height: 80px; /* Set height to make it square */
+    width: 80px;
+    height: 80px;
     margin: 10px 0;
     border-radius: 8px;
     object-fit: cover;
-}
-
-.ok-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 }
