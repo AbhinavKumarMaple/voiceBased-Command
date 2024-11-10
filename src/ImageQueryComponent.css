@@ -1,4 +1,4 @@
-/* Updated CSS for full-width, top-margin, and left-aligned layout */
+/* Updated CSS for full-width layout with fixed image */
 
 .ImageQueryComponent {
     font-family: 'Arial', sans-serif;
@@ -8,17 +8,17 @@
     margin-top: 80px; /* Space below navigation bar */
     padding: 20px;
     background-color: #f9f9f9;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-sizing: border-box;
 }
 
 .query-section {
-    text-align: left; /* Align text to the left */
     width: 100%;
-    max-width: 1200px; /* Maximum width for large displays */
+    max-width: 1200px; /* Optional maximum width for readability */
     margin-bottom: 20px;
+    text-align: left;
 }
 
 .file-input-container {
@@ -66,32 +66,14 @@
 }
 
 .result-section {
-    margin-top: 20px;
-    text-align: left;
     width: 100%;
     max-width: 1200px;
-}
-
-.result {
-    background-color: white;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-    overflow-y: auto;
-    max-height: 500px; /* Adds scrolling if the result is large */
-}
-
-.result-flex {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    flex-wrap: wrap;
 }
 
 .result-image {
-    width: 100%;
-    max-width: 300px;
+    width: 300px; /* Fixed width for static image */
     padding-right: 20px;
 }
 
@@ -102,8 +84,13 @@
 }
 
 .result-content {
-    width: 100%;
-    max-width: 600px;
+    flex: 1; /* Takes up remaining width */
+    overflow-y: auto; /* Allows only result content to scroll */
+    max-height: 500px; /* Sets a max height for scrolling */
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .result-grid {
@@ -179,9 +166,9 @@
 }
 
 .uploaded-image {
-    width: 80px;
-    height: 80px;
-    margin: 10px 0;
+    width: 100%;
+    height: auto;
+    max-height: 300px;
     border-radius: 8px;
     object-fit: cover;
 }
