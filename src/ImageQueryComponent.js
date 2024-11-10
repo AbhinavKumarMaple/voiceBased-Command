@@ -52,11 +52,6 @@ function ImageQueryComponent() {
         }
     };
 
-    const handleClearResult = () => {
-        setResult(null); // Clear result
-    };
-
-    // Helper function to render the result as a table
     const renderResultTable = (resultData) => {
         if (!resultData || !resultData.product_metadata || resultData.product_metadata.length === 0) {
             return <p>No product data available.</p>;
@@ -64,10 +59,6 @@ function ImageQueryComponent() {
 
         const product = resultData.product_metadata[0];
         const keys = Object.keys(product);
-
-        const filterEmptyValues = (value) => {
-            return value !== null && value !== undefined && value !== '' && !(typeof value === 'object' && Object.keys(value).length === 0);
-        };
 
         return (
             <div className="product-details">
@@ -82,36 +73,12 @@ function ImageQueryComponent() {
                     </div>
                     <div className="result-content">
                         <div className="result-grid">
-                            {keys.map((key, index) => {
-                                const value = product[key];
-                                if (!filterEmptyValues(value)) return null;
-
-                                if (value && typeof value === "object" && !Array.isArray(value)) {
-                                    const nestedEntries = Object.entries(value).filter(([nestedKey, nestedValue]) => filterEmptyValues(nestedValue));
-                                    if (nestedEntries.length === 0) return null;
-
-                                    return (
-                                        <React.Fragment key={index}>
-                                            <div className="result-section">
-                                                <strong>{key.replace("_", " ").toUpperCase()}</strong>
-                                                {nestedEntries.map(([nestedKey, nestedValue], nestedIndex) => (
-                                                    <div key={`${index}-${nestedIndex}`} className="result-item">
-                                                        <span>{nestedKey.replace("_", " ").toUpperCase()}</span>
-                                                        <span>{nestedValue || "Not available"}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </React.Fragment>
-                                    );
-                                } else {
-                                    return (
-                                        <div key={index} className="result-item">
-                                            <span>{key.replace("_", " ").toUpperCase()}</span>
-                                            <span>{value || "Not available"}</span>
-                                        </div>
-                                    );
-                                }
-                            })}
+                            {keys.map((key, index) => (
+                                <div key={index} className="result-item">
+                                    <span>{key.replace("_", " ").toUpperCase()}</span>
+                                    <span>{product[key] || "Not available"}</span>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -164,23 +131,13 @@ function ImageQueryComponent() {
                         </div>
                     </div>
                 )}
-                <hr />
-                <div className="result-section">
-                    {result && (
-                        <div className="result">
-                            {result.error ? (
-                                <p>{result.error}</p>
-                            ) : (
-                                <>
-                                    {renderResultTable(result)}
-                                </>
-                            )}
-                            <button onClick={handleClearResult} className="ok-button">
-                                OK
-                            </button>
-                        </div>
-                    )}
-                </div>
+            </div>
+            <div className="result-section">
+                {result && (
+                    <div className="result">
+                        {result.error ? <p>{result.error}</p> : renderResultTable(result)}
+                    </div>
+                )}
             </div>
         </div>
     );
